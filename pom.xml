@@ -8,7 +8,7 @@
     <name>shubidu Maven Webapp</name>
     <url>http://maven.apache.org</url>
     <properties>
-        <spring.version>4.0.6.RELEASE</spring.version>1.6.2.RELEASE
+        <spring.version>4.0.6.RELEASE</spring.version>
         <spring.data-version>1.6.2.RELEASE</spring.data-version>
     </properties>
     <dependencies>
