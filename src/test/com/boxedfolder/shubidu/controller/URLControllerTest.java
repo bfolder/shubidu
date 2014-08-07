@@ -19,6 +19,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import static junit.framework.Assert.assertEquals;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -62,14 +63,18 @@ public class URLControllerTest {
     }
 
     @Test
-    public void testHandleURLNotFound() throws Exception{
-        // This page does not exist
+    public void testHandleURLNotFound() throws Exception {
         given(mockService.getURLByShortLink("xyz")).willThrow(new URLService.URLNotFoundException());
         mockMvc.perform(get("/xyz")).andExpect(status().is(404));
     }
 
     @Test
-    public void testHandleLinkNotProvided() throws Exception{
-
+    public void testHandleLinkNotProvided() throws Exception {
+        URL url = new URL();
+        url.setLink("");
+        doThrow(new URLService.LinkNotProvidedException()).when(mockService).addURL(url);
+        mockMvc.perform(post("/").param("link", ""))
+                .andExpect(status().is(302))
+                .andExpect(view().name("redirect:/"));
     }
 }

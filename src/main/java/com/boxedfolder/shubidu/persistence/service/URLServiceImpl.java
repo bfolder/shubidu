@@ -36,7 +36,6 @@ public class URLServiceImpl implements URLService {
         if (url == null) {
             throw new URLNotFoundException();
         }
-
         return null;
     }
 

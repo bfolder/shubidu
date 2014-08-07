@@ -53,9 +53,9 @@ public class URLController {
         return "errors/404";
     }
 
+    @ResponseStatus(value = HttpStatus.NOT_FOUND)
     @ExceptionHandler(URLService.LinkNotProvidedException.class)
-    public String handleLinkNotProvidedException(RedirectAttributes model) {
-        model.addFlashAttribute("errorMessage", "No link provided");
+    public String handleLinkNotProvidedException() {
         return "redirect:/";
     }
 }
