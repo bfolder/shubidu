@@ -1,6 +1,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <body>
-    <p>This is a results page</p>
+    <p>This is your generated link: <a href="result.html"
+                                       th:with="finalLink=@{${root} + ${url.link}}"
+                                       th:href="${finalLink}"
+                                       th:text="${finalLink}">Link</a>
+    </p>
 </body>
 </html>

@@ -11,6 +11,7 @@ public class URL {
     @GeneratedValue
     private Long id;
     private String link;
+    private String shortLink;
     private Date date;
 
     public Long getId() {
@@ -41,5 +42,13 @@ public class URL {
     public boolean equals(Object obj) {
         URL url = (URL)obj;
         return link.equals(url.link);
+    }
+
+    public String getShortLink() {
+        return shortLink;
+    }
+
+    public void setShortLink(String shortLink) {
+        this.shortLink = shortLink;
     }
 }

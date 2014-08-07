@@ -6,12 +6,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.boxedfolder.shubidu.persistence.repository.URLRepository;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 @Service
 public class URLServiceImpl implements URLService {
     @Autowired
     private URLRepository urlRepository;
+
+    public URLServiceImpl(){}
+
+    public URLServiceImpl(URLRepository urlRepository) {
+        this.urlRepository = urlRepository;
+    }
 
     @Override
     public void addURL(URL url) throws LinkNotProvidedException {
@@ -24,12 +31,17 @@ public class URLServiceImpl implements URLService {
 
     @Transactional(readOnly = true)
     @Override
-    public URL getURLById(Long id) throws URLNotFoundException {
-        URL url = urlRepository.findOne(id);
+    public URL getURLByShortLink(String shortLink) throws URLNotFoundException {
+        URL url = urlRepository.findUrlByShortLink(shortLink);
         if (url == null) {
             throw new URLNotFoundException();
         }
 
-        return url;
+        return null;
+    }
+
+    @Override
+    public String getRootPath(HttpServletRequest request) {
+        return request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + "/" + request.getContextPath();
     }
 }
