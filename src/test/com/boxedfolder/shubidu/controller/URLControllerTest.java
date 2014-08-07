@@ -26,6 +26,6 @@ public class URLControllerTest {
 
     @Test
     public void testResultPage() throws Exception {
-        mockMvc.perform(get("/123")).andExpect(view().name("url")).andExpect(model().attribute("id", "123"));
+        mockMvc.perform(get("/result")).andExpect(view().name("result"));
     }
 }
