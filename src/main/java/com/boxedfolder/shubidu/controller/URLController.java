@@ -3,6 +3,7 @@ package com.boxedfolder.shubidu.controller;
 import com.boxedfolder.shubidu.persistence.domain.URL;
 import com.boxedfolder.shubidu.persistence.service.URLService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -44,6 +45,12 @@ public class URLController {
     @RequestMapping(value = "/result", method = RequestMethod.GET)
     public String showResult() {
         return "result";
+    }
+
+    @ResponseStatus(value = HttpStatus.NOT_FOUND)
+    @ExceptionHandler(URLService.URLNotFoundException.class)
+    public String handleURLNotFoundException() {
+        return "errors/404";
     }
 
     @ExceptionHandler(URLService.LinkNotProvidedException.class)

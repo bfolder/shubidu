@@ -8,8 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 
 public interface URLService {
     class LinkNotProvidedException extends RuntimeException {}
-
-    @ResponseStatus(value = HttpStatus.NOT_FOUND)
     class URLNotFoundException extends RuntimeException {}
 
     void addURL(URL url) throws LinkNotProvidedException;
