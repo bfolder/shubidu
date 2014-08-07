@@ -13,14 +13,19 @@ public class URLController {
     @Autowired
     private URLService urlService;
 
+    public URLController(URLService urlService) {
+        this.urlService = urlService;
+    }
+
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String showHome() {
+    public String showHome(Model model) {
+        model.addAttribute("url", new URL());
         return "index";
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public String postLink(String link, RedirectAttributes model) {
-        URL url = urlService.addURL(link);
+    public String postLink(@ModelAttribute("url") URL url, RedirectAttributes model) {
+        urlService.addURL(url);
         model.addFlashAttribute("url", url);
         return "redirect:/result";
     }
@@ -35,8 +40,8 @@ public class URLController {
         return "error/404";
     }
 
-    @ExceptionHandler(URLService.URLNotProvidedException.class)
-    public String handleURLNotProvidedException(RedirectAttributes model) {
+    @ExceptionHandler(URLService.LinkNotProvidedException.class)
+    public String handleLinkNotProvidedException(RedirectAttributes model) {
         model.addFlashAttribute("errorMessage", "No link provided");
         return "redirect:/";
     }

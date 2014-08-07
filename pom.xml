@@ -6,7 +6,7 @@
     <packaging>war</packaging>
     <version>1.0-SNAPSHOT</version>
     <name>shubidu Maven Webapp</name>
-    <url>http://maven.apache.org</url>
+    <link>http://maven.apache.org</link>
     <properties>
         <spring.version>4.0.6.RELEASE</spring.version>
         <spring.data-version>1.6.2.RELEASE</spring.data-version>

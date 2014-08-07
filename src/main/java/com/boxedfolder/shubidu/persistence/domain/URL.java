@@ -10,7 +10,7 @@ public class URL {
     @Id
     @GeneratedValue
     private Long id;
-    private String url;
+    private String link;
     private Date date;
 
     public Long getId() {
@@ -21,12 +21,12 @@ public class URL {
         this.id = id;
     }
 
-    public String getUrl() {
-        return url;
+    public String getLink() {
+        return link;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setLink(String link) {
+        this.link = link;
     }
 
     public Date getDate() {
@@ -35,5 +35,11 @@ public class URL {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        URL url = (URL)obj;
+        return link.equals(url.link);
     }
 }

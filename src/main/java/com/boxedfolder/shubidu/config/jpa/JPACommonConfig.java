@@ -19,7 +19,7 @@ import javax.sql.DataSource;
 import java.sql.SQLException;
 
 @Configuration
-@EnableJpaRepositories(basePackages = "com.boxedfolder.quoter.persistence.repository")
+@EnableJpaRepositories(basePackages = "com.boxedfolder.shubidu.persistence.repository")
 @EnableTransactionManagement
 public abstract class JPACommonConfig {
     @Bean
@@ -32,10 +32,9 @@ public abstract class JPACommonConfig {
 
         LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
         factory.setJpaVendorAdapter(vendorAdapter);
-        factory.setPackagesToScan("com.boxedfolder.quoter.persistence.domain");
+        factory.setPackagesToScan("com.boxedfolder.shubidu.persistence.domain");
         factory.setDataSource(dataSource());
         factory.afterPropertiesSet();
-
         return factory.getObject();
     }
 
