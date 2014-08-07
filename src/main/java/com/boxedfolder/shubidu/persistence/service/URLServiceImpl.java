@@ -47,7 +47,7 @@ public class URLServiceImpl implements URLService {
     private URL appendHttp(URL url) {
         // Append http inside this service method to keep the model class thin.
         String link = url.getLink();
-        if (!link.startsWith("http://")) {
+        if (!link.startsWith("http")) {
             url.setLink("http://" + link);
         }
         return url;
