@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import javax.servlet.http.HttpServletRequest;
 
 public interface URLService {
-    @ResponseStatus(value = HttpStatus.NOT_FOUND)
     class URLNotFoundException extends RuntimeException {}
 
     URL addURL(URL url);

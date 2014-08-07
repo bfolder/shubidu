@@ -3,11 +3,10 @@ package com.boxedfolder.shubidu.controller;
 import com.boxedfolder.shubidu.persistence.domain.URL;
 import com.boxedfolder.shubidu.persistence.service.URLService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class WebController {
@@ -27,8 +26,14 @@ public class WebController {
     }
 
     @RequestMapping(value = "/{shortLink}", method = RequestMethod.GET)
-    public String redirectToLink(@PathVariable("shortLink") String shortLink, Model model) {
+    public String redirectToLink(@PathVariable("shortLink") String shortLink) {
         URL url = urlService.getURLByShortLink(shortLink);
-        return "forward:" + url.getLink();
+        return "redirect:" + url.getLink();
+    }
+
+    @ResponseStatus(value = HttpStatus.NOT_FOUND)
+    @ExceptionHandler(URLService.URLNotFoundException.class)
+    public String handleURLNotFoundException() {
+        return "errors/404";
     }
 }

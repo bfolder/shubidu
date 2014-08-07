@@ -26,12 +26,7 @@ public class URLServiceImpl implements URLService {
         int calc = Base62.toBase10(url.getLink());
         url.setShortLink(String.valueOf(calc));
         url.setDate(new Date());
-        try {
-            url = getURLByShortLink(url.getShortLink());
-        } catch (Exception e) {
-            urlRepository.save(url);
-        }
-        return url;
+        return validateAndSave(url);
     }
 
     @Transactional(readOnly = true)
@@ -47,5 +42,24 @@ public class URLServiceImpl implements URLService {
     @Override
     public String getRootPath(HttpServletRequest request) {
         return request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + "/" + request.getContextPath();
+    }
+
+    private URL appendHttp(URL url) {
+        // Append http inside this service method to keep the model class thin.
+        String link = url.getLink();
+        if (!link.startsWith("http://")) {
+            url.setLink("http://" + link);
+        }
+        return url;
+    }
+
+    private URL validateAndSave(URL url) {
+        appendHttp(url);
+        try {
+            url = getURLByShortLink(url.getShortLink());
+        } catch (Exception e) {
+            urlRepository.save(url);
+        }
+        return url;
     }
 }
