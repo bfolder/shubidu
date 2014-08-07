@@ -1,5 +1,6 @@
 package com.boxedfolder.shubidu.persistence.service;
 
+import com.boxedfolder.shubidu.persistence.domain.helper.Base62;
 import com.boxedfolder.shubidu.persistence.domain.URL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,25 +22,22 @@ public class URLServiceImpl implements URLService {
     }
 
     @Override
-    public void addURL(URL url) {
+    public URL addURL(URL url) {
+        int calc = Base62.toBase10(url.getLink());
+        url.setShortLink(String.valueOf(calc));
         url.setDate(new Date());
-        urlRepository.save(url);
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    public URL getURLByShortLink(String shortLink) throws URLNotFoundException {
-        URL url = urlRepository.findUrlByShortLink(shortLink);
-        if (url == null) {
-            throw new URLNotFoundException();
+        try {
+            url = getURLByShortLink(url.getShortLink());
+        } catch (Exception e) {
+            urlRepository.save(url);
         }
         return url;
     }
 
     @Transactional(readOnly = true)
     @Override
-    public URL getURLById(Long id) throws URLNotFoundException {
-        URL url = urlRepository.findOne(id);
+    public URL getURLByShortLink(String shortLink) throws URLNotFoundException {
+        URL url = urlRepository.findUrlByShortLink(shortLink);
         if (url == null) {
             throw new URLNotFoundException();
         }

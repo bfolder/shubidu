@@ -12,6 +12,7 @@ public class URL {
     @Id
     @GeneratedValue
     private Long id;
+
     @NotNull
     @Size(min = 1)
     private String link;
