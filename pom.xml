@@ -2,11 +2,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.boxedfolder</groupId>
-    <artifactId>shubidu</artifactId>
+    <artifactId>quoter</artifactId>
     <packaging>war</packaging>
     <version>1.0-SNAPSHOT</version>
-    <name>shubidu Maven Webapp</name>
-    <link>http://maven.apache.org</link>
+    <name>quoter Maven Webapp</name>
+    <url>http://maven.apache.org</url>
     <properties>
         <spring.version>4.0.6.RELEASE</spring.version>
         <spring.data-version>1.6.2.RELEASE</spring.data-version>
@@ -83,7 +83,12 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
-            <version>4.3.5.Final</version>
+            <version>4.3.6.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>5.1.2.Final</version>
         </dependency>
         <dependency>
             <groupId>com.h2database</groupId>

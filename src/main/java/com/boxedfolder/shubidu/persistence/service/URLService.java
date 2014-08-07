@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import javax.servlet.http.HttpServletRequest;
 
 public interface URLService {
-    class LinkNotProvidedException extends RuntimeException {}
     class URLNotFoundException extends RuntimeException {}
 
-    void addURL(URL url) throws LinkNotProvidedException;
+    void addURL(URL url);
     URL getURLByShortLink(String shortLink) throws URLNotFoundException;
+    URL getURLById(Long id) throws URLNotFoundException;
 
     String getRootPath(HttpServletRequest request);
 }

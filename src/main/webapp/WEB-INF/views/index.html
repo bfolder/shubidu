@@ -3,7 +3,7 @@
 <body>
     <h2>Shorten url:</h2>
     <p>
-        <form action="#" method="post" th:object="${url}">
+        <form method="post" th:object="${url}">
             <input type="text" th:field="*{link}" />
             <input type="submit" />
         </form>

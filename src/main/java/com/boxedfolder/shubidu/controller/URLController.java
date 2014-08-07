@@ -6,10 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 @Controller
 public class URLController {
@@ -35,15 +38,19 @@ public class URLController {
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public String postLink(@ModelAttribute("url") URL url, RedirectAttributes model, HttpServletRequest request) {
+    public String postLink(@Valid URL url, Errors errors) {
+        if (errors.hasErrors()) {
+            return "index";
+        }
         urlService.addURL(url);
-        model.addFlashAttribute("url", url);
-        model.addFlashAttribute("root", urlService.getRootPath(request));
-        return "redirect:/result";
+        return "redirect:/result/" + url.getId();
     }
 
-    @RequestMapping(value = "/result", method = RequestMethod.GET)
-    public String showResult() {
+    @RequestMapping(value = "/result/{id}", method = RequestMethod.GET)
+    public String showResult(@PathVariable("id") Long id, Model model, HttpServletRequest request) {
+        URL url = urlService.getURLById(id);
+        model.addAttribute("url", url);
+        model.addAttribute("root", urlService.getRootPath(request));
         return "result";
     }
 
@@ -51,11 +58,5 @@ public class URLController {
     @ExceptionHandler(URLService.URLNotFoundException.class)
     public String handleURLNotFoundException() {
         return "errors/404";
-    }
-
-    @ResponseStatus(value = HttpStatus.NOT_FOUND)
-    @ExceptionHandler(URLService.LinkNotProvidedException.class)
-    public String handleLinkNotProvidedException() {
-        return "redirect:/";
     }
 }

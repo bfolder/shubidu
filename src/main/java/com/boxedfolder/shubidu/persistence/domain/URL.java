@@ -1,15 +1,19 @@
 package com.boxedfolder.shubidu.persistence.domain;
 
+import com.sun.istack.internal.NotNull;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.Size;
 import java.util.Date;
-
 @Entity
 public class URL {
     @Id
     @GeneratedValue
     private Long id;
+    @NotNull
+    @Size(min = 1)
     private String link;
     private String shortLink;
     private Date date;

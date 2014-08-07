@@ -69,12 +69,6 @@ public class URLControllerTest {
     }
 
     @Test
-    public void testHandleLinkNotProvided() throws Exception {
-        URL url = new URL();
-        url.setLink("");
-        doThrow(new URLService.LinkNotProvidedException()).when(mockService).addURL(url);
-        mockMvc.perform(post("/").param("link", ""))
-                .andExpect(status().is(302))
-                .andExpect(view().name("redirect:/"));
+    public void testLinkValidation() throws Exception {
     }
 }

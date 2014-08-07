@@ -21,10 +21,7 @@ public class URLServiceImpl implements URLService {
     }
 
     @Override
-    public void addURL(URL url) throws LinkNotProvidedException {
-        if (url == null || url.getLink().equals("")) {
-            throw new LinkNotProvidedException();
-        }
+    public void addURL(URL url) {
         url.setDate(new Date());
         urlRepository.save(url);
     }
@@ -36,7 +33,17 @@ public class URLServiceImpl implements URLService {
         if (url == null) {
             throw new URLNotFoundException();
         }
-        return null;
+        return url;
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public URL getURLById(Long id) throws URLNotFoundException {
+        URL url = urlRepository.findOne(id);
+        if (url == null) {
+            throw new URLNotFoundException();
+        }
+        return url;
     }
 
     @Override
