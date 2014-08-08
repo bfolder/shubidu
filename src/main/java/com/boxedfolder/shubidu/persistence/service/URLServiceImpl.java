@@ -1,7 +1,8 @@
 package com.boxedfolder.shubidu.persistence.service;
 
 import com.boxedfolder.shubidu.persistence.domain.URL;
-import com.boxedfolder.shubidu.persistence.domain.helper.Encoder;
+import com.boxedfolder.shubidu.persistence.domain.helper.encoding.Encoder;
+import com.boxedfolder.shubidu.persistence.domain.helper.validation.Validator;
 import com.boxedfolder.shubidu.persistence.repository.URLRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,57 +14,55 @@ import java.util.Date;
 @Service
 public class URLServiceImpl implements URLService {
     @Autowired
+    private Validator<URL> notNullValidator;
+
+    @Autowired
     private URLRepository urlRepository;
 
     @Autowired
-    private Encoder encoder;
+    private Encoder<String, Long> encoder;
 
     public URLServiceImpl() {
     }
 
-    public URLServiceImpl(URLRepository urlRepository, Encoder encoder) {
+    public URLServiceImpl(URLRepository urlRepository,
+                          Encoder<String, Long> encoder,
+                          Validator<URL> notNullValidator) {
         this.urlRepository = urlRepository;
         this.encoder = encoder;
+        this.notNullValidator = notNullValidator;
     }
 
     @Override
     public URL addURL(URL url) {
-        url.setShortLink(encoder.encode(url.getLink()));
         url.setDate(new Date());
-        return validateAndSave(url);
+        try {
+            url = getUrlByLink(url.getLink());
+        } catch (Exception e) {
+            url = urlRepository.save(url);
+            url.setShortLink(encoder.encode(url.getId()));
+        }
+        return urlRepository.save(url);
     }
 
     @Transactional(readOnly = true)
     @Override
     public URL getURLByShortLink(String shortLink) throws URLNotFoundException {
         URL url = urlRepository.findUrlByShortLink(shortLink);
-        if (url == null) {
-            throw new URLNotFoundException();
-        }
+        notNullValidator.validate(url);
+        return url;
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public URL getUrlByLink(String link) throws URLNotFoundException {
+        URL url = urlRepository.findUrlByLink(link);
+        notNullValidator.validate(url);
         return url;
     }
 
     @Override
     public String getRootPath(HttpServletRequest request) {
         return request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + "/" + request.getContextPath();
-    }
-
-    private URL appendHttp(URL url) {
-        // Append http inside this service method to keep the model class thin.
-        String link = url.getLink();
-        if (!link.startsWith("http")) {
-            url.setLink("http://" + link);
-        }
-        return url;
-    }
-
-    private URL validateAndSave(URL url) {
-        appendHttp(url);
-        try {
-            url = getURLByShortLink(url.getShortLink());
-        } catch (Exception e) {
-            urlRepository.save(url);
-        }
-        return url;
     }
 }

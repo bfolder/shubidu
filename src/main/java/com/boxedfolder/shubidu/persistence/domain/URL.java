@@ -4,18 +4,21 @@ import com.sun.istack.internal.NotNull;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.Size;
 import java.util.Date;
 @Entity
 public class URL {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull
     @Size(min = 1)
+    @org.hibernate.validator.constraints.URL
     private String link;
+
     private String shortLink;
     private Date date;
 
