@@ -1,4 +1,4 @@
-package com.boxedfolder.shubidu.persistence.domain.helper.encoding;
+package com.boxedfolder.shubidu.persistence.domain.encoding;
 
 public class Base62Encoder implements Encoder<String, Long> {
     public static final String ALPHABET = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";

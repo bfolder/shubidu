@@ -1,7 +1,7 @@
 package com.boxedfolder.shubidu.config;
 
-import com.boxedfolder.shubidu.persistence.domain.helper.encoding.Base62Encoder;
-import com.boxedfolder.shubidu.persistence.domain.helper.encoding.Encoder;
+import com.boxedfolder.shubidu.persistence.domain.encoding.Base62Encoder;
+import com.boxedfolder.shubidu.persistence.domain.encoding.Encoder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

@@ -1,7 +1,7 @@
 package com.boxedfolder.shubidu.persistence.service;
 
 import com.boxedfolder.shubidu.persistence.domain.URL;
-import com.boxedfolder.shubidu.persistence.domain.helper.encoding.Encoder;
+import com.boxedfolder.shubidu.persistence.domain.encoding.Encoder;
 import com.boxedfolder.shubidu.persistence.repository.URLRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

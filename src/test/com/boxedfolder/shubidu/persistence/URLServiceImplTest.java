@@ -1,13 +1,14 @@
 package com.boxedfolder.shubidu.persistence;
 
 import com.boxedfolder.shubidu.persistence.domain.URL;
-import com.boxedfolder.shubidu.persistence.domain.helper.encoding.Base62Encoder;
+import com.boxedfolder.shubidu.persistence.domain.encoding.Base62Encoder;
 import com.boxedfolder.shubidu.persistence.repository.URLRepository;
 import com.boxedfolder.shubidu.persistence.service.URLService;
 import com.boxedfolder.shubidu.persistence.service.URLServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -18,23 +19,47 @@ import static org.mockito.Mockito.mock;
 public class URLServiceImplTest {
     private URLService urlService;
     private URLRepository mockRepository;
-    private Base62Encoder mockEncoder;
+    private URL url;
 
     @Before
     public void setup() {
         mockRepository = mock(URLRepository.class);
-        mockEncoder = mock(Base62Encoder.class);
+        Base62Encoder mockEncoder = mock(Base62Encoder.class);
         urlService = new URLServiceImpl(mockRepository, mockEncoder);
+
+        url = new URL();
+        url.setDate(new Date());
+        url.setId(1L);
+        url.setLink("http://www.google.de");
+        url.setShortLink("b");
     }
 
     @Test
     public void testAddURL() {
-        URL url = new URL();
-        url.setId(1L);
-        url.setDate(new Date());
-        url.setLink("http://www.google.de");
-
         given(mockRepository.save(url)).willReturn(url);
         assertThat(urlService.addURL(url), equalTo(url));
+    }
+
+    @Test
+    public void testGetURLByShortLink() {
+        given(mockRepository.findUrlByShortLink(url.getShortLink())).willReturn(url);
+        assertThat(urlService.getURLByShortLink(url.getShortLink()), equalTo(url));
+    }
+
+    @Test
+    public void testGetUrlByLink() {
+        given(mockRepository.findUrlByLink(url.getLink())).willReturn(url);
+        assertThat(urlService.getUrlByLink(url.getLink()), equalTo(url));
+    }
+
+    @Test
+    public void testGetRootPath() {
+        HttpServletRequest request = mock(HttpServletRequest.class);
+        given(request.getContextPath()).willReturn("");
+        given(request.getScheme()).willReturn("http");
+        given(request.getServerName()).willReturn("google.de");
+        given(request.getServerPort()).willReturn(8080);
+        String path = urlService.getRootPath(request);
+        assertThat(path, equalTo("http://google.de:8080/"));
     }
 }

@@ -1,6 +1,6 @@
 package com.boxedfolder.shubidu.persistence;
 
-import com.boxedfolder.shubidu.persistence.domain.helper.encoding.Base62Encoder;
+import com.boxedfolder.shubidu.persistence.domain.encoding.Base62Encoder;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.equalTo;
