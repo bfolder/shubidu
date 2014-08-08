@@ -1,12 +1,9 @@
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <body>
-    <h2>Shorten url:</h2>
-    <p>
-        <form method="post" th:object="${url}">
-            <input type="text" th:field="*{link}" />
-            <input type="submit" />
-        </form>
-    </p>
+<h2>Shorten url:</h2>
+<form>
+    <input type="text"/>
+    <input type="submit"/>
+</form>
 </body>
 </html>

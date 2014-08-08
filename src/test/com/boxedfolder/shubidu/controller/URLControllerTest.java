@@ -1,7 +1,10 @@
 package com.boxedfolder.shubidu.controller;
 
 import com.boxedfolder.shubidu.persistence.domain.URL;
+import com.boxedfolder.shubidu.persistence.domain.encoding.Base62Encoder;
+import com.boxedfolder.shubidu.persistence.repository.URLRepository;
 import com.boxedfolder.shubidu.persistence.service.URLService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.MediaType;
@@ -10,22 +13,22 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import java.util.Date;
 
-import static junit.framework.Assert.assertEquals;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
 
 public class URLControllerTest {
     private MockMvc mockMvc;
     private URLService mockService;
+    private URL url;
+    private String content;
 
     @Before
-    public void setup() {
+    public void setup() throws Exception{
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
         viewResolver.setPrefix("/WEB-INF/jsp/view/");
         viewResolver.setSuffix(".html");
@@ -33,21 +36,28 @@ public class URLControllerTest {
         mockService = mock(URLService.class);
         URLController controller = new URLController(mockService);
         mockMvc = standaloneSetup(controller).setViewResolvers(viewResolver).build();
-    }
-
-    @Test
-    public void testPostLink() throws Exception {
-        URL url = new URL();
+        url = new URL();
         url.setDate(new Date());
         url.setId(1L);
         url.setLink("http://www.google.de");
         url.setShortLink("b");
 
-        given(mockService.getUrlByLink(url.getLink())).willReturn(null);
-        mockMvc.perform(post("/").contentType(MediaType.APPLICATION_JSON).content("{'link':'http://www.google.de'}")).andExpect(status().isOk());
+        ObjectMapper mapper = new ObjectMapper();
+        content = mapper.writeValueAsString(url);
     }
 
     @Test
-    public void testLinkValidation() throws Exception {
+    public void testPostLink() throws Exception {
+        given(mockService.addURL(url)).willReturn(url);
+        mockMvc.perform(post("/").contentType(MediaType.APPLICATION_JSON).content(content))
+                .andExpect(status().isOk())
+                .andExpect(content().string(content));
+    }
+
+    @Test
+    public void testGetURL() throws Exception {
+        given(mockService.getURLByShortLink(url.getShortLink())).willReturn(url);
+        mockMvc.perform(get("/get/b")).andExpect(status().isOk())
+                .andExpect(content().string(content));
     }
 }
