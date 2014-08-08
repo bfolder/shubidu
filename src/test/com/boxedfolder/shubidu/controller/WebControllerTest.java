@@ -6,14 +6,14 @@ import org.junit.Test;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
-import static junit.framework.Assert.assertEquals;
-import static org.mockito.Mockito.doThrow;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
 
-public class URLControllerTest {
+public class WebControllerTest {
     private MockMvc mockMvc;
     private URLService mockService;
 
@@ -24,15 +24,23 @@ public class URLControllerTest {
         viewResolver.setSuffix(".html");
 
         mockService = mock(URLService.class);
-        URLController controller = new URLController(mockService);
+        WebController controller = new WebController(mockService);
         mockMvc = standaloneSetup(controller).setViewResolvers(viewResolver).build();
     }
 
     @Test
-    public void testPostLink() throws Exception {
+    public void testShowHome() throws Exception {
+        mockMvc.perform(get("/")).andExpect(view().name("index"));
     }
 
     @Test
-    public void testLinkValidation() throws Exception {
+    public void testHandleURLNotFound() throws Exception {
+        given(mockService.getURLByShortLink("xyz")).willThrow(new URLService.URLNotFoundException());
+        mockMvc.perform(get("/xyz")).andExpect(status().is(404));
+    }
+
+    @Test
+    public void testRedirect() throws Exception {
+        // TODO: Test Redirect
     }
 }
