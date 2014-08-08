@@ -11,6 +11,5 @@ public interface URLService {
 
     URL addURL(URL url);
     URL getURLByShortLink(String shortLink) throws URLNotFoundException;
-
     String getRootPath(HttpServletRequest request);
 }

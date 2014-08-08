@@ -1,11 +1,11 @@
 package com.boxedfolder.shubidu.persistence.service;
 
-import com.boxedfolder.shubidu.persistence.domain.helper.Base62;
 import com.boxedfolder.shubidu.persistence.domain.URL;
+import com.boxedfolder.shubidu.persistence.domain.helper.Encoder;
+import com.boxedfolder.shubidu.persistence.repository.URLRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.boxedfolder.shubidu.persistence.repository.URLRepository;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
@@ -15,16 +15,20 @@ public class URLServiceImpl implements URLService {
     @Autowired
     private URLRepository urlRepository;
 
-    public URLServiceImpl(){}
+    @Autowired
+    private Encoder encoder;
 
-    public URLServiceImpl(URLRepository urlRepository) {
+    public URLServiceImpl() {
+    }
+
+    public URLServiceImpl(URLRepository urlRepository, Encoder encoder) {
         this.urlRepository = urlRepository;
+        this.encoder = encoder;
     }
 
     @Override
     public URL addURL(URL url) {
-        int calc = Base62.toBase10(url.getLink());
-        url.setShortLink(String.valueOf(calc));
+        url.setShortLink(encoder.encode(url.getLink()));
         url.setDate(new Date());
         return validateAndSave(url);
     }
