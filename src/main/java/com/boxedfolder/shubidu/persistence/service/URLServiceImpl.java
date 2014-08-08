@@ -2,7 +2,6 @@ package com.boxedfolder.shubidu.persistence.service;
 
 import com.boxedfolder.shubidu.persistence.domain.URL;
 import com.boxedfolder.shubidu.persistence.domain.helper.encoding.Encoder;
-import com.boxedfolder.shubidu.persistence.domain.helper.validation.Validator;
 import com.boxedfolder.shubidu.persistence.repository.URLRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,9 +13,6 @@ import java.util.Date;
 @Service
 public class URLServiceImpl implements URLService {
     @Autowired
-    private Validator<URL> notNullValidator;
-
-    @Autowired
     private URLRepository urlRepository;
 
     @Autowired
@@ -26,11 +22,9 @@ public class URLServiceImpl implements URLService {
     }
 
     public URLServiceImpl(URLRepository urlRepository,
-                          Encoder<String, Long> encoder,
-                          Validator<URL> notNullValidator) {
+                          Encoder<String, Long> encoder) {
         this.urlRepository = urlRepository;
         this.encoder = encoder;
-        this.notNullValidator = notNullValidator;
     }
 
     @Override
@@ -49,7 +43,9 @@ public class URLServiceImpl implements URLService {
     @Override
     public URL getURLByShortLink(String shortLink) throws URLNotFoundException {
         URL url = urlRepository.findUrlByShortLink(shortLink);
-        notNullValidator.validate(url);
+        if (url == null) {
+            throw new URLService.URLNotFoundException();
+        }
         return url;
     }
 
@@ -57,12 +53,17 @@ public class URLServiceImpl implements URLService {
     @Override
     public URL getUrlByLink(String link) throws URLNotFoundException {
         URL url = urlRepository.findUrlByLink(link);
-        notNullValidator.validate(url);
+        if (url == null) {
+            throw new URLService.URLNotFoundException();
+        }
         return url;
     }
 
     @Override
     public String getRootPath(HttpServletRequest request) {
-        return request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + "/" + request.getContextPath();
+        return request.getScheme() + "://"
+                + request.getServerName() + ":"
+                + request.getServerPort() + "/"
+                + request.getContextPath();
     }
 }
