@@ -38,7 +38,7 @@ public class URLServiceImpl implements URLService {
         url.setDate(new Date());
         try {
             url = getUrlByLink(url.getLink());
-        } catch (Exception e) {
+        } catch (URLNotFoundException e) {
             url = urlRepository.save(url);
             url.setShortLink(encoder.encode(url.getId()));
         }
