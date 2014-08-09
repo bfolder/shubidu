@@ -37,19 +37,22 @@ public class URLServiceImplTest {
     @Test
     public void testAddURL() {
         given(mockRepository.save(url)).willReturn(url);
-        assertThat(urlService.addURL(url), equalTo(url));
+        URL returnUrl = urlService.addURL(url);
+        assertThat(returnUrl, equalTo(url));
     }
 
     @Test
     public void testGetURLByShortLink() {
         given(mockRepository.findUrlByShortLink(url.getShortLink())).willReturn(url);
-        assertThat(urlService.getURLByShortLink(url.getShortLink()), equalTo(url));
+        URL returnUrl = urlService.getURLByShortLink(url.getShortLink());
+        assertThat(returnUrl, equalTo(url));
     }
 
     @Test
     public void testGetUrlByLink() {
         given(mockRepository.findUrlByLink(url.getLink())).willReturn(url);
-        assertThat(urlService.getUrlByLink(url.getLink()), equalTo(url));
+        URL returnUrl = urlService.getUrlByLink(url.getLink());
+        assertThat(returnUrl, equalTo(url));
     }
 
     @Test
