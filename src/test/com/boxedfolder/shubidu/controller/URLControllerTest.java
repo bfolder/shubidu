@@ -1,8 +1,6 @@
 package com.boxedfolder.shubidu.controller;
 
 import com.boxedfolder.shubidu.persistence.domain.URL;
-import com.boxedfolder.shubidu.persistence.domain.encoding.Base62Encoder;
-import com.boxedfolder.shubidu.persistence.repository.URLRepository;
 import com.boxedfolder.shubidu.persistence.service.URLService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
@@ -28,7 +26,7 @@ public class URLControllerTest {
     private String content;
 
     @Before
-    public void setup() throws Exception{
+    public void setup() throws Exception {
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
         viewResolver.setPrefix("/WEB-INF/jsp/view/");
         viewResolver.setSuffix(".html");
