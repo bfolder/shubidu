@@ -26,7 +26,9 @@ public class URLController {
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public URL createURL(@RequestBody URL url, HttpServletRequest request) {
-        return urlService.addURL(url, request);
+        url = urlService.addURL(url, request);
+
+        return url;
     }
 
     @ResponseStatus(HttpStatus.OK)

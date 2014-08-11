@@ -33,10 +33,14 @@ public class URLServiceImpl implements URLService {
         try {
             url = getURLByLink(url.getLink(), request);
         } catch (URLNotFoundException e) {
+            // Generate id (If anyone knows a way to easily generate the id without saving the object, let me know)
             url = urlRepository.save(url);
-            url.setShortLink(encoder.encode(url.getId()));
+            url.setHash(encoder.encode(url.getId())); // Encode id
+            url = urlRepository.save(url); // Save url with encoded id
+            url.setShortLink(getRootPath(request) + url.getHash()); // Add transient shortlink
         }
-        return urlRepository.save(url);
+
+        return url;
     }
 
     @Transactional(readOnly = true)
