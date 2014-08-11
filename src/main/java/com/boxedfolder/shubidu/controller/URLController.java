@@ -8,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @RestController
@@ -24,14 +25,14 @@ public class URLController {
     @RequestMapping(value = "/", method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public URL createURL(@RequestBody URL url) {
-        return urlService.addURL(url);
+    public URL createURL(@RequestBody URL url, HttpServletRequest request) {
+        return urlService.addURL(url, request);
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @RequestMapping(value = "/get/{shortLink}", method = RequestMethod.GET,
+    @RequestMapping(value = "/get/{hash}", method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public URL getURL(@PathVariable("shortLink") String shortLink) {
-        return urlService.getURLByShortLink(shortLink);
+    public URL getURL(@PathVariable("hash") String hash, HttpServletRequest request) {
+        return urlService.getURLByHash(hash, request);
     }
 }

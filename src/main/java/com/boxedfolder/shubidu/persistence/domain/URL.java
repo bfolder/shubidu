@@ -2,10 +2,7 @@ package com.boxedfolder.shubidu.persistence.domain;
 
 import com.sun.istack.internal.NotNull;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.util.Date;
 
@@ -19,9 +16,11 @@ public class URL {
     @Size(min = 1)
     @org.hibernate.validator.constraints.URL
     private String link;
-
-    private String shortLink;
+    private String hash;
     private Date date;
+
+    @Transient
+    private String shortLink;
 
     public Long getId() {
         return id;
@@ -59,5 +58,13 @@ public class URL {
 
     public void setShortLink(String shortLink) {
         this.shortLink = shortLink;
+    }
+
+    public String getHash() {
+        return hash;
+    }
+
+    public void setHash(String hash) {
+        this.hash = hash;
     }
 }

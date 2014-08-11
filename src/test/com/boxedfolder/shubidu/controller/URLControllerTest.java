@@ -6,12 +6,17 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -37,8 +42,9 @@ public class URLControllerTest {
         url = new URL();
         url.setDate(new Date());
         url.setId(1L);
-        url.setLink("http://www.google.de");
-        url.setShortLink("b");
+        url.setLink("http://www.google.com");
+        url.setHash("b");
+        url.setShortLink("http://www.google.com/b");
 
         ObjectMapper mapper = new ObjectMapper();
         content = mapper.writeValueAsString(url);
@@ -46,7 +52,7 @@ public class URLControllerTest {
 
     @Test
     public void testPostLink() throws Exception {
-        given(mockService.addURL(url)).willReturn(url);
+        given(mockService.addURL(eq(url), any(HttpServletRequest.class))).willReturn(url);
         mockMvc.perform(post("/").contentType(MediaType.APPLICATION_JSON).content(content))
                 .andExpect(status().isOk())
                 .andExpect(content().string(content));
@@ -54,7 +60,7 @@ public class URLControllerTest {
 
     @Test
     public void testGetURL() throws Exception {
-        given(mockService.getURLByShortLink(url.getShortLink())).willReturn(url);
+        given(mockService.getURLByHash(eq(url.getHash()), any(HttpServletRequest.class))).willReturn(url);
         mockMvc.perform(get("/get/b")).andExpect(status().isOk())
                 .andExpect(content().string(content));
     }

@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 public class WebController {
     @Autowired
@@ -25,9 +27,9 @@ public class WebController {
         return "index";
     }
 
-    @RequestMapping(value = "/{shortLink}", method = RequestMethod.GET)
-    public String redirectToLink(@PathVariable("shortLink") String shortLink) {
-        URL url = urlService.getURLByShortLink(shortLink);
+    @RequestMapping(value = "/{hash}", method = RequestMethod.GET)
+    public String redirectToLink(@PathVariable("hash") String hash, HttpServletRequest request) {
+        URL url = urlService.getURLByHash(hash, request);
         return "redirect:" + url.getLink();
     }
 

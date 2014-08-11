@@ -7,9 +7,13 @@ import org.junit.Test;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -38,7 +42,7 @@ public class WebControllerTest {
 
     @Test
     public void testHandleURLNotFound() throws Exception {
-        given(mockService.getURLByShortLink("xyz")).willThrow(new URLService.URLNotFoundException());
+        given(mockService.getURLByHash(eq("xyz"), any(HttpServletRequest.class))).willThrow(new URLService.URLNotFoundException());
         mockMvc.perform(get("/xyz")).andExpect(status().is(404));
 
     }
@@ -48,10 +52,10 @@ public class WebControllerTest {
         URL url = new URL();
         url.setDate(new Date());
         url.setId(1L);
-        url.setLink("http://www.google.de");
+        url.setLink("http://www.google.com");
         url.setShortLink("b");
 
-        given(mockService.getURLByShortLink("b")).willReturn(url);
-        mockMvc.perform(get("/b")).andExpect(view().name("redirect:http://www.google.de"));
+        given(mockService.getURLByHash(eq("b"), any(HttpServletRequest.class))).willReturn(url);
+        mockMvc.perform(get("/b")).andExpect(view().name("redirect:http://www.google.com"));
     }
 }

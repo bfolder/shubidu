@@ -9,8 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 public interface URLService {
     class URLNotFoundException extends RuntimeException {}
 
-    URL addURL(URL url);
-    URL getURLByShortLink(String shortLink) throws URLNotFoundException;
-    URL getUrlByLink(String link) throws URLNotFoundException;
-    String getRootPath(HttpServletRequest request);
+    URL addURL(URL url, HttpServletRequest request);
+    URL getURLByHash(String hash, HttpServletRequest request) throws URLNotFoundException;
+    URL getURLByLink(String link, HttpServletRequest request) throws URLNotFoundException;
 }

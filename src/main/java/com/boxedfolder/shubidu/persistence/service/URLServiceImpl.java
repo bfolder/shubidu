@@ -28,10 +28,10 @@ public class URLServiceImpl implements URLService {
     }
 
     @Override
-    public URL addURL(URL url) {
+    public URL addURL(URL url, HttpServletRequest request) {
         url.setDate(new Date());
         try {
-            url = getUrlByLink(url.getLink());
+            url = getURLByLink(url.getLink(), request);
         } catch (URLNotFoundException e) {
             url = urlRepository.save(url);
             url.setShortLink(encoder.encode(url.getId()));
@@ -41,26 +41,27 @@ public class URLServiceImpl implements URLService {
 
     @Transactional(readOnly = true)
     @Override
-    public URL getURLByShortLink(String shortLink) throws URLNotFoundException {
-        URL url = urlRepository.findUrlByShortLink(shortLink);
-        if (url == null) {
-            throw new URLService.URLNotFoundException();
-        }
-        return url;
+    public URL getURLByHash(String hash, HttpServletRequest request) throws URLNotFoundException {
+        URL url = urlRepository.findUrlByHash(hash);
+        return refreshURL(url, request);
     }
 
     @Transactional(readOnly = true)
     @Override
-    public URL getUrlByLink(String link) throws URLNotFoundException {
+    public URL getURLByLink(String link, HttpServletRequest request) throws URLNotFoundException {
         URL url = urlRepository.findUrlByLink(link);
+        return refreshURL(url, request);
+    }
+
+    private URL refreshURL(URL url, HttpServletRequest request) {
         if (url == null) {
             throw new URLService.URLNotFoundException();
         }
+        url.setShortLink(getRootPath(request) + url.getHash());
         return url;
     }
 
-    @Override
-    public String getRootPath(HttpServletRequest request) {
+    private String getRootPath(HttpServletRequest request) {
         return request.getScheme() + "://"
                 + request.getServerName() + ":"
                 + request.getServerPort() + "/"
