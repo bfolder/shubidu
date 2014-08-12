@@ -1,12 +1,12 @@
 *{margin:0;padding:0}
-body{font-family:Georgia, 'Times New Roman', serif;background-color:#eee;overflow:auto}
+body{font-family:Helvetica,Arial, sans-serif;background-color:#eee;overflow:auto}
 h1{display:inline;font-weight:400;color:#4cdb55;font-size:320%}
 h2{display:inline;font-weight:400;font-size:320%}
 p{color:#777;margin-top:15px}
 a{text-decoration:none;color:#68ccb8;border-bottom:1px solid #68ccb8}
 a:hover{color:#21deb8;border-bottom:1px solid #21deb8}
 .wrap{text-align:left;width:380px;margin-left:auto;margin-right:auto;margin-top:180px}
-.linkbox{text-align:center;font-weight:400;font-size:120%;width:380px;height:70px}
+.linkbox{text-align:center;font-weight:400;font-size:110%;width:380px;color:#666}
 .dark,h2{color:#555}
 input{font-size:19px;padding:5px;background-color: white;border:1px solid #21deb8;border-radius: 5px;}
 button{font-size:19px;padding:5px 10px;margin-left:5px;background-color:#21deb8;border:1px solid #21deb8;border-radius:5px;color:white;cursor:pointer}
@@ -18,3 +18,4 @@ button:hover{background-color:#68ccb8;border-color:#68ccb8}
 input.ng-invalid{border-color:#E89897}
 input[type="url"]:focus{border-color:none;box-shadow:inset 0 0 4px 1px #68ccb8;-webkit-box-shadow:inset 0 0 4px 1px #68ccb8;outline: -webkit-focus-ring-color auto 0px}
 input.ng-invalid:focus{border-color:#E89897;box-shadow:inset 0 0 4px 1px #E89897;-webkit-box-shadow:inset 0 0 4px 1px #E89897}
+.logo{height:50px;width:100px;background:url("/images/logo.png") 0px 0px;margin-left:-10px}
