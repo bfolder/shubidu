@@ -10,3 +10,6 @@ a:hover{color:#666;border-bottom:1px solid #666}
 input{font-size:19px;padding:5px;background-color: white;border:1px solid #21deb8;border-radius: 5px;}
 button{font-size:19px;padding:5px 10px;margin-left:5px;background-color:#21deb8;border:1px solid #21deb8;border-radius:5px;color:white;cursor:pointer}
 button:hover{background-color:#68ccb8;border-color:#68ccb8}
+.error{color:red}
+span.error{font-size:11px;margin:5px;display:inline-block}
+.spinner{height:11px;width:16px;}
