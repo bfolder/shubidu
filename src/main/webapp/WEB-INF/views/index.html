@@ -2,20 +2,20 @@
 <head>
     <title>shubidu - url shortener</title>
     <link rel="stylesheet" href="css/styles.css" type="text/css">
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.21/angular.min.js"></script>
     <script src="js/app.js"></script>
 </head>
 <body ng-app="shubidu">
 <div class="wrap" ng-controller="URLController">
-    <form name="url" ng-submit="createURL(form)">
-        <input type="url" name="link" ng-model="link" placeholder="e.g. http://google.com"/>
+    <div class="linkBox" ng-show="url">
+        Your shortened url: <a href="{{url.shortLink}}" title="Shortened link">{{url.shortLink}}</a>
+        <small><a href="" ng-click="reset()" title="Try another url?">Try another url?</a></small>
+    </div>
+    <form name="urlForm" ng-submit="createURL(urlForm)" ng-hide="url">
+        <input type="url" name="link" ng-model="link" placeholder="e.g. http://google.com" />
         <button type="submit">Shorten</button>
-        <span class="spinner"><img src="/images/ajax-loader.gif" /></span>
+        <span class="spinner" ng-show="spinner"><img src="/images/ajax-loader.gif" /></span>
     </form>
-    <span class="error" ng-show="url.link.$error.url">
-        Enter a valid URL. Don't forget http://.</span>
-    {{url.shortLink}}
 </div>
 </body>
 </html>
