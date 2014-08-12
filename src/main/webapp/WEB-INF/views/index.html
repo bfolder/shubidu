@@ -7,16 +7,16 @@
 </head>
 <body ng-app="shubidu">
 <div class="wrap" ng-controller="URLController">
-    <div class="linkBox" ng-show="url">
-        Your shortened url: <a href="{{url.shortLink}}" title="Shortened link">{{url.shortLink}}</a>
-        <small><a href="" ng-click="reset()" title="Try another url?">Try another url?</a></small>
-    </div>
-    <div class="logo" ng-hide="url"></div>
+    <div class="logo"></div>
     <form name="urlForm" ng-submit="createURL(urlForm)" ng-hide="url" class="urlForm">
         <input type="url" name="link" ng-model="link" placeholder="e.g. http://google.com" />
         <button type="submit">Shorten</button>
         <span class="spinner" ng-show="spinner"><img src="/images/ajax-loader.gif" /></span>
     </form>
+    <div class="linkBox" ng-show="url">
+        <div class="box"><a href="{{url.shortLink}}" title="Shortened link">{{url.shortLink}}</a></div>
+        <small><a href="" ng-click="reset()" title="Try another url?">Try another url?</a></small>
+    </div>
 </div>
 </body>
 </html>
