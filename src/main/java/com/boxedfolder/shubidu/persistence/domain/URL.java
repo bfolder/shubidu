@@ -1,7 +1,5 @@
 package com.boxedfolder.shubidu.persistence.domain;
 
-import com.sun.istack.internal.NotNull;
-
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.util.Date;
@@ -12,7 +10,6 @@ public class URL {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
     @Size(min = 1)
     @org.hibernate.validator.constraints.URL
     private String link;
