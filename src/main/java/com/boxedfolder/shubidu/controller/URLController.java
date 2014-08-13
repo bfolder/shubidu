@@ -13,11 +13,11 @@ import javax.validation.Valid;
 
 @RestController
 public class URLController {
-    @Autowired
     private URLService urlService;
 
     public URLController(){}
 
+    @Autowired
     public URLController(URLService urlService) {
         this.urlService = urlService;
     }
@@ -26,9 +26,7 @@ public class URLController {
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public URL createURL(@RequestBody URL url, HttpServletRequest request) {
-        url = urlService.addURL(url, request);
-
-        return url;
+        return urlService.addURL(url, request);
     }
 
     @ResponseStatus(HttpStatus.OK)

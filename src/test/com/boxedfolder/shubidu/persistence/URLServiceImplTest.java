@@ -40,7 +40,7 @@ public class URLServiceImplTest {
     @Test
     public void testAddURL() {
         given(mockRepository.save(url)).willReturn(url);
-        URL returnUrl = urlService.addURL(url, (HttpServletRequest)anyObject());
+        URL returnUrl = urlService.addURL(url, request);
         assertThat(returnUrl, equalTo(url));
     }
 

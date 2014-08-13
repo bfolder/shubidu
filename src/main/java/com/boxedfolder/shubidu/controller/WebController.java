@@ -12,11 +12,11 @@ import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class WebController {
-    @Autowired
     URLService urlService;
 
     public WebController(){}
 
+    @Autowired
     public WebController(URLService urlService) {
         this.urlService = urlService;
     }

@@ -12,15 +12,13 @@ import java.util.Date;
 
 @Service
 public class URLServiceImpl implements URLService {
-    @Autowired
     private URLRepository urlRepository;
-
-    @Autowired
     private Encoder<String, Long> encoder;
 
     public URLServiceImpl() {
     }
 
+    @Autowired
     public URLServiceImpl(URLRepository urlRepository,
                           Encoder<String, Long> encoder) {
         this.urlRepository = urlRepository;
