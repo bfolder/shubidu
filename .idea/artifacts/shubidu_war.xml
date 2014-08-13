@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="war" name="shubidu:war">
-    <output-path>$PROJECT_DIR$/target</output-path>
-    <root id="archive" name="shubidu.war">
-      <element id="artifact" artifact-name="shubidu:war exploded" />
-    </root>
-  </artifact>
-</component>
