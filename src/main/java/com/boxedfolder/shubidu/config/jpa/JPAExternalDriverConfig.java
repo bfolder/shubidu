@@ -1,11 +1,9 @@
 package com.boxedfolder.shubidu.config.jpa;
 
 import com.boxedfolder.shubidu.config.Modes;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import javax.sql.DataSource;
@@ -15,9 +13,6 @@ import java.sql.SQLException;
 @Profile({Modes.PRODUCTION, Modes.DEFAULT})
 @Configuration
 public class JPAExternalDriverConfig extends JPACommonConfig {
-    @Autowired
-    private Environment env;
-
     @Override
     public DataSource dataSource() throws SQLException {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();

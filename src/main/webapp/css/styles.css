@@ -19,4 +19,4 @@ button:hover{background-color:#68ccb8;border-color:#68ccb8}
 input.ng-invalid{border-color:#E89897}
 input[type="url"]:focus{border-color:none;box-shadow:inset 0 0 4px 1px #68ccb8;-webkit-box-shadow:inset 0 0 4px 1px #68ccb8;outline: -webkit-focus-ring-color auto 0px}
 input.ng-invalid:focus{border-color:#E89897;box-shadow:inset 0 0 4px 1px #E89897;-webkit-box-shadow:inset 0 0 4px 1px #E89897}
-.logo{height:50px;width:100px;background:url("/images/logo.png") 0px 0px;margin-left:-10px}
+.logo{height:50px;width:100px;background:url("../images/logo.png") 0px 0px;margin-left:-10px}
