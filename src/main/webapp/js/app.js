@@ -6,10 +6,10 @@ app.controller("URLController", function($scope, $http, $location) {
         }
         var data = { link: $scope.link};
         $scope.spinner = true;
-        $http.post("/", data).success(function(data, status, headers, config) {
+        $http.post(".", data).success(function(data, status, headers, config) {
             $scope.spinner = false;
             $scope.url = data;
-            $scope.location = location.href + data.hash;
+            $scope.rootUrl = $location.absUrl();
         }).error(function(data, status, headers, config){
             $scope.spinner = false;
         });
