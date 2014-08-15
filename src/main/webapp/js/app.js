@@ -6,6 +6,7 @@ app.controller("URLController", function($scope, $http, $location) {
         }
         var data = { link: $scope.link};
         $scope.spinner = true;
+        $scope.location = location;
         $http.post("/", data).success(function(data, status, headers, config) {
             $scope.spinner = false;
             $scope.url = data;

@@ -8,13 +8,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-
 @Controller
 public class WebController {
     URLService urlService;
 
-    public WebController(){}
+    public WebController() {
+    }
 
     @Autowired
     public WebController(URLService urlService) {
@@ -28,8 +27,8 @@ public class WebController {
     }
 
     @RequestMapping(value = "/{hash}", method = RequestMethod.GET)
-    public String redirectToLink(@PathVariable("hash") String hash, HttpServletRequest request) {
-        URL url = urlService.getURLByHash(hash, request);
+    public String redirectToLink(@PathVariable("hash") String hash) {
+        URL url = urlService.getURLByHash(hash);
         return "redirect:" + url.getLink();
     }
 

@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 @Service
@@ -26,16 +25,15 @@ public class URLServiceImpl implements URLService {
     }
 
     @Override
-    public URL addURL(URL url, HttpServletRequest request) {
+    public URL addURL(URL url) {
         url.setDate(new Date());
         try {
-            url = getURLByLink(url.getLink(), request);
+            url = getURLByLink(url.getLink());
         } catch (URLNotFoundException e) {
             // Generate id (If anyone knows a way to easily generate the id without saving the object, let me know)
             url = urlRepository.save(url);
             url.setHash(encoder.encode(url.getId())); // Encode id
             url = urlRepository.save(url); // Save url with encoded id
-            url.setShortLink(getRootPath(request) + url.getHash()); // Add transient shortlink
         }
 
         return url;
@@ -43,30 +41,21 @@ public class URLServiceImpl implements URLService {
 
     @Transactional(readOnly = true)
     @Override
-    public URL getURLByHash(String hash, HttpServletRequest request) throws URLNotFoundException {
+    public URL getURLByHash(String hash) throws URLNotFoundException {
         URL url = urlRepository.findUrlByHash(hash);
-        return refreshURL(url, request);
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    public URL getURLByLink(String link, HttpServletRequest request) throws URLNotFoundException {
-        URL url = urlRepository.findUrlByLink(link);
-        return refreshURL(url, request);
-    }
-
-    private URL refreshURL(URL url, HttpServletRequest request) {
         if (url == null) {
             throw new URLService.URLNotFoundException();
         }
-        url.setShortLink(getRootPath(request) + url.getHash());
         return url;
     }
 
-    private String getRootPath(HttpServletRequest request) {
-        return request.getScheme() + "://"
-                + request.getServerName() + ":"
-                + request.getServerPort() + "/"
-                + request.getContextPath();
+    @Transactional(readOnly = true)
+    @Override
+    public URL getURLByLink(String link) throws URLNotFoundException {
+        URL url = urlRepository.findUrlByLink(link);
+        if (url == null) {
+            throw new URLService.URLNotFoundException();
+        }
+        return url;
     }
 }

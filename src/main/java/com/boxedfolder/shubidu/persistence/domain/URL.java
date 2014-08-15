@@ -16,9 +16,6 @@ public class URL {
     private String hash;
     private Date date;
 
-    @Transient
-    private String shortLink;
-
     public Long getId() {
         return id;
     }
@@ -43,25 +40,17 @@ public class URL {
         this.date = date;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        URL url = (URL)obj;
-        return link.equals(url.link);
-    }
-
-    public String getShortLink() {
-        return shortLink;
-    }
-
-    public void setShortLink(String shortLink) {
-        this.shortLink = shortLink;
-    }
-
     public String getHash() {
         return hash;
     }
 
     public void setHash(String hash) {
         this.hash = hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        URL url = (URL)obj;
+        return link.equals(url.link);
     }
 }
