@@ -8,14 +8,11 @@ import com.boxedfolder.shubidu.persistence.service.URLServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.mock;
 
 public class URLServiceImplTest {

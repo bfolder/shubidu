@@ -7,13 +7,9 @@ import org.junit.Test;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyObject;
-import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
