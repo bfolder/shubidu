@@ -44,7 +44,6 @@ public class URLControllerTest {
         url.setId(1L);
         url.setLink("http://www.google.com");
         url.setHash("b");
-        url.setShortLink("http://www.google.com/b");
 
         ObjectMapper mapper = new ObjectMapper();
         content = mapper.writeValueAsString(url);
@@ -52,7 +51,7 @@ public class URLControllerTest {
 
     @Test
     public void testPostLink() throws Exception {
-        given(mockService.addURL(eq(url), any(HttpServletRequest.class))).willReturn(url);
+        given(mockService.addURL(url)).willReturn(url);
         mockMvc.perform(post("/").contentType(MediaType.APPLICATION_JSON).content(content))
                 .andExpect(status().isOk())
                 .andExpect(content().string(content));
@@ -60,7 +59,7 @@ public class URLControllerTest {
 
     @Test
     public void testGetURL() throws Exception {
-        given(mockService.getURLByHash(eq(url.getHash()), any(HttpServletRequest.class))).willReturn(url);
+        given(mockService.getURLByHash(url.getHash())).willReturn(url);
         mockMvc.perform(get("/get/b")).andExpect(status().isOk())
                 .andExpect(content().string(content));
     }

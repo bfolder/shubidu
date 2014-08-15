@@ -42,7 +42,7 @@ public class WebControllerTest {
 
     @Test
     public void testHandleURLNotFound() throws Exception {
-        given(mockService.getURLByHash(eq("xyz"), any(HttpServletRequest.class))).willThrow(new URLService.URLNotFoundException());
+        given(mockService.getURLByHash("xyz")).willThrow(new URLService.URLNotFoundException());
         mockMvc.perform(get("/xyz")).andExpect(status().is(404));
 
     }
@@ -53,9 +53,9 @@ public class WebControllerTest {
         url.setDate(new Date());
         url.setId(1L);
         url.setLink("http://www.google.com");
-        url.setShortLink("b");
+        url.setHash("b");
 
-        given(mockService.getURLByHash(eq("b"), any(HttpServletRequest.class))).willReturn(url);
+        given(mockService.getURLByHash("b")).willReturn(url);
         mockMvc.perform(get("/b")).andExpect(view().name("redirect:http://www.google.com"));
     }
 }
