@@ -7,12 +7,12 @@ a{text-decoration:none;color:#68ccb8;border-bottom:1px solid #68ccb8}
 a:hover{color:#21deb8;border-bottom:1px solid #21deb8}
 .wrap{text-align:left;width:380px;margin-left:auto;margin-right:auto;margin-top:180px}
 .linkbox{font-size:17px}
-.linkBox .box{height:22px;padding-top:2px;text-align:center;padding:5px;background-color:#fff;border:1px solid #ccc;border-radius:5px;}
+.linkBox .box{height:22px;padding-top:2px;text-align:center;padding:5px;background-color:#fff;border:1px solid #ccc;border-radius:5px}
 .dark,h2{color:#555}
 input{font-size:19px;padding:5px;background-color: white;border:1px solid #21deb8;border-radius:5px}
 button{width:95px;font-size:19px;padding:5px 10px;margin-left:5px;background-color:#21deb8;border:1px solid #21deb8;border-radius:5px;color:white;cursor:pointer}
 button:hover{background-color:#68ccb8;border-color:#68ccb8}
-.spinner{height:11px;width:16px;}
+.spinner{height:11px;width:16px}
 .linkBox small{margin-top:15px;display:inline-block}
 .linkBox small a{color:#666;border-bottom:1px solid #666}
 .linkBox small a:hover{color:#888;border-bottom:1px solid #888}
