@@ -5,6 +5,7 @@ import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Entity
+@Table(name = "url")
 public class URL {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

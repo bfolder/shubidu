@@ -17,6 +17,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.sql.SQLException;
+import java.util.Properties;
 
 @Configuration
 @EnableJpaRepositories(basePackages = "com.boxedfolder.shubidu.persistence.repository")
@@ -37,6 +38,7 @@ public abstract class JPACommonConfig {
         factory.setJpaVendorAdapter(vendorAdapter);
         factory.setPackagesToScan("com.boxedfolder.shubidu.persistence.domain");
         factory.setDataSource(dataSource());
+        factory.setJpaProperties(properties());
         factory.afterPropertiesSet();
         factory.setJpaDialect(new HibernateJpaDialect());
         return factory.getObject();
@@ -57,5 +59,16 @@ public abstract class JPACommonConfig {
     @Bean
     public HibernateExceptionTranslator hibernateExceptionTranslator() {
         return new HibernateExceptionTranslator();
+    }
+
+    private Properties properties() {
+        Properties properties = new Properties();
+        if (env.getProperty("hibernate.hbm2ddl.auto") != null) {
+            properties.setProperty("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
+        }
+        if (env.getProperty("hibernate.dialect") != null) {
+            properties.setProperty("hibernate.dialect", env.getProperty("hibernate.dialect"));
+        }
+        return properties;
     }
 }
