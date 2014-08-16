@@ -13,6 +13,7 @@ import java.sql.SQLException;
 public class JPAExternalDriverConfig extends JPACommonConfig {
     @Override
     public DataSource dataSource() throws SQLException {
+        // One could use JNDI Datasource in production
         BasicDataSource dataSource = new BasicDataSource();
         dataSource.setDriverClassName(env.getProperty("jdbc.driver"));
         dataSource.setUrl(env.getProperty("jdbc.url"));
