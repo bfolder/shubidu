@@ -4,13 +4,10 @@ import com.boxedfolder.shubidu.config.Modes;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
 
-@PropertySource("classpath:/database.properties")
 @Profile({Modes.PRODUCTION, Modes.DEFAULT})
 @Configuration
 public class JPAExternalDriverConfig extends JPACommonConfig {
