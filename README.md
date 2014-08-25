@@ -2,8 +2,8 @@
 shubidu is a little url shortener based on Spring MVC and Hibernate. The frontend is utilising AngularJS to retrieve data via REST.
 
 JDBC Drivers can be specified inside the database.properties file. Profile 'development' is building an in-memory storage. Have a look into the 'com.boxedfolder.shubidu.config' package for details.
-
 See it in action on heroku: [http://shubidu.herokuapp.com](http://shubidu.herokuapp.com)
+
 ---
 ## Licensing
 
